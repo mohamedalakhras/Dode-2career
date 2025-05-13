@@ -1,0 +1,304 @@
+التحدي 1: عكس القائمة
+
+لعكس قائمة باستخدام المكدس، نضع جميع العناصر في المكدس ثم نطبعها أثناء إزالتها.
+
+dart
+
+
+void reverseList<T>(List<T> list) {
+  Stack<T> stack = Stack<T>();
+  for (var item in list) {
+    stack.push(item);
+  }
+  while (!stack.isEmpty) {
+    print(stack.pop());
+  }
+}
+
+// مثال:
+void main() {
+  List<int> numbers = [1, 2, 3, 4, 5];
+  reverseList(numbers); // يطبع: 5, 4, 3, 2, 1
+}
+
+
+
+التحدي 2: موازنة الأقواس
+
+للتحقق من موازنة الأقواس، نستخدم مكدسًا لتتبع الأقواس المفتوحة ( ومطابقتها مع الأقواس المغلقة ).
+
+dart
+
+
+bool isBalanced(String input) {
+  Stack<String> stack = Stack<String>();
+  for (var char in input.split('')) {
+    if (char == '(') {
+      stack.push(char);
+    } else if (char == ')') {
+      if (stack.isEmpty) return false;
+      stack.pop();
+    }
+  }
+  return stack.isEmpty;
+}
+
+// مثال:
+void main() {
+  print(isBalanced("((()))")); // true
+  print(isBalanced("(()")); // false
+  print(isBalanced(")(")); // false
+}
+
+
+
+  print(isBalanced("((()))")); // true
+  print(isBalanced("(()")); // false
+  print(isBalanced(")(")); // false
+}
+
+
+
+3. القائمة المرتبطة (Linked List)
+
+القائمة المرتبطة هي هيكل بيانات يتكون من عقد، كل عقدة تحتوي على بيانات ومرجع إلى العقدة التالية. هناك نوعان رئيسيان:
+
+قائمة مرتبطة أحادية: كل عقدة تشير إلى العقدة التالية.
+
+
+
+قائمة مرتبطة مزدوجة: كل عقدة تشير إلى العقدة التالية والسابقة.
+
+
+تنفيذ القائمة المرتبطة الأحادية في Dart
+
+dart
+
+
+class Node<T> {
+  T data;
+  Node<T>? next;
+  Node(this.data, [this.next]);
+}
+
+class LinkedList<T> {
+  Node<T>? head;
+
+  void add(T data) {
+    if (head == null) {
+      head = Node(data);
+    } else {
+      Node<T>? current = head;
+      while (current!.next != null) {
+        current = current.next;
+      }
+      current.next = Node(data);
+    }
+  }
+}
+
+
+
+التحدي 1: الطباعة بالترتيب العكسي
+
+لطباعة القائمة بالترتيب العكسي، نستخدم التراجع (recursion) للوصول إلى نهاية القائمة ثم الطباعة.
+
+dart
+
+
+void printReverse(Node<T>? node) {
+  if (node == null) return;
+  printReverse(node.next);
+  print(node.data);
+}
+
+// مثال:
+void main() {
+  LinkedList<int> list = LinkedList<int>();
+  list.add(1);
+  list.add(2);
+  list.add(3);
+  printReverse(list.head); // يطبع: 3, 2, 1
+}
+
+
+
+التحدي 2: العثور على العقدة الوسطى
+
+نستخدم خوارزمية العدّاء البطيء والسريع (slow and fast pointer) لإيجاد العقدة الوسطى.
+
+dart
+
+
+Node<T>? findMiddle<T>(LinkedList<T> list) {
+  Node<T>? slow = list.head;
+  Node<T>? fast = list.head;
+  
+  while (fast?.next != null && fast?.next?.next != null) {
+    slow = slow!.next;
+    fast = fast!.next?.next;
+  }
+  return slow;
+}
+
+// مثال:
+void main() {
+  LinkedList<int> list = LinkedList<int>();
+  list.add(1);
+  list.add(2);
+  list.add(3);
+  list.add(4);
+  print(findMiddle(list)?.data); // يطبع: 2
+}
+
+. القائمة المرتبطة (Linked List)
+
+
+class Node<T> {
+  T data;
+  Node<T>? next;
+  Node(this.data, [this.next]);
+}
+
+class LinkedList<T> {
+  Node<T>? head;
+
+  void add(T data) {
+    if (head == null) {
+      head = Node(data);
+    } else {
+      Node<T>? current = head;
+      while (current!.next != null) {
+        current = current.next;
+      }
+      current.next = Node(data);
+    }
+  }
+}
+
+
+
+التحدي 1: الطباعة بالترتيب العكسي
+
+لطباعة القائمة بالترتيب العكسي، نستخدم التراجع (recursion) للوصول إلى نهاية القائمة ثم الطباعة.
+
+dart
+
+
+void printReverse(Node<T>? node) {
+  if (node == null) return;
+  printReverse(node.next);
+  print(node.data);
+}
+
+// مثال:
+void main() {
+  LinkedList<int> list = LinkedList<int>();
+  list.add(1);
+  list.add(2);
+  list.add(3);
+  printReverse(list.head); // يطبع: 3, 2, 1
+}
+
+التحدي 2: العثور على العقدة الوسطى
+
+نستخدم خوارزمية العدّاء البطيء والسريع (slow and fast pointer) لإيجاد العقدة الوسطى.
+
+dart
+
+
+Node<T>? findMiddle<T>(LinkedList<T> list) {
+  Node<T>? slow = list.head;
+  Node<T>? fast = list.head;
+  
+  while (fast?.next != null && fast?.next?.next != null) {
+    slow = slow!.next;
+    fast = fast!.next?.next;
+  }
+  return slow;
+}
+
+// مثال:
+void main() {
+  LinkedList<int> list = LinkedList<int>();
+  list.add(1);
+  list.add(2);
+  list.add(3);
+  list.add(4);
+  print(findMiddle(list)?.data); // يطبع: 2
+}
+
+
+
+التحدي 3: عكس قائمة مرتبطة
+
+لعكس القائمة، نغير اتجاه المراجع بين العقد.
+
+dart
+
+
+void reverse<T>(LinkedList<T> list) {
+  Node<T>? prev = null;
+  Node<T>? current = list.head;
+  
+  while (current != null) {
+    Node<T>? next = current.next;
+    current.next = prev;
+    prev = current;
+    current = next;
+  }
+  list.head = prev;
+}
+
+// مثال:
+void main() {
+  LinkedList<int> list = LinkedList<int>();
+  list.add(1);
+  list.add(2);
+  list.add(3);
+  reverse(list);
+  printReverse(list.head); // يطبع: 1, 2, 3
+}
+
+
+
+التحدي 4: إزالة جميع التكرارات
+
+لإزالة جميع تكرارات عنصر معين، نمر عبر القائمة ونزيل العقد التي تحتوي على القيمة المحددة.
+
+dart
+
+
+void removeAllOccurrences<T>(LinkedList<T> list, T value) {
+  Node<T>? current = list.head;
+  Node<T>? prev = null;
+
+  while (current != null) {
+    if (current.data == value) {
+      if (prev == null) {
+        list.head = current.next;
+      } else {
+        prev.next = current.next;
+      }
+    } else {
+      prev = current;
+    }
+    current = current.next;
+  }
+}
+
+// مثال:
+void main() {
+  LinkedList<int> list = LinkedList<int>();
+  list.add(1);
+  list.add(2);
+  list.add(1);
+  list.add(3);
+  removeAllOccurrences(list, 1);
+  printReverse(list.head); // يطبع: 3, 2
+}
+
+
+
+
+
